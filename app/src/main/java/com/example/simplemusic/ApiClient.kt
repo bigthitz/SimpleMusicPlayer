@@ -148,7 +148,7 @@ object ApiClient {
         if (body != null && method != "GET") {
             val jsonBody = gson.toJson(body)
             requestBuilder.addHeader("Content-Type", "application/json")
-            requestBuilder.method(method, RequestBody.create(jsonBody, MediaType.parse("application/json")))
+            requestBuilder.method(method, RequestBody.create(jsonBody, "application/json".toMediaType()))
         } else {
             requestBuilder.method(method, null)
         }
@@ -179,10 +179,11 @@ object ApiClient {
     /**
      * 解析响应 JSON 为指定类型
      */
-    inline fun <reified T> parseResponse(response: Response): T? {
+    @PublishedApi
+    internal fun <T> parseResponse(response: Response, type: Class<T>): T? {
         return try {
             val bodyStr = response.body?.string() ?: return null
-            gson.fromJson(bodyStr, T::class.java)
+            gson.fromJson(bodyStr, type)
         } catch (e: Exception) {
             null
         }

@@ -17,8 +17,9 @@ jobs:
           distribution: 'temurin'
 
       - uses: gradle/actions/setup-gradle@v3
-        with:
-          arguments: assembleDebug
+
+      - name: Build Debug APK
+        run: gradle assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:

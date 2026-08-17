@@ -148,7 +148,7 @@ object ApiClient {
         if (body != null && method != "GET") {
             val jsonBody = gson.toJson(body)
             requestBuilder.addHeader("Content-Type", "application/json")
-            requestBuilder.method(method, jsonBody.toRequestBody("application/json".toMediaType()))
+            requestBuilder.method(method, RequestBody.create(jsonBody, MediaType.parse("application/json")))
         } else {
             requestBuilder.method(method, null)
         }

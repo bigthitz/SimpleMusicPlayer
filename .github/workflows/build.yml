@@ -17,10 +17,12 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        run: chmod +x gradlew
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.12'
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
